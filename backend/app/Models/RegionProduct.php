@@ -15,6 +15,9 @@ class RegionProduct extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['vat_included' => true, 'is_visible' => true];
+
     protected function casts(): array
     {
         return [

@@ -19,6 +19,9 @@ class Offer extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['status' => 'draft', 'payment_terms' => 'prepay_100'];
+
     protected function casts(): array
     {
         return [

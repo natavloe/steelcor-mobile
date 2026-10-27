@@ -16,6 +16,9 @@ class Document extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['status' => 'generating', 'version' => 1, 'visibility' => 'client', 'signing_route' => 'none'];
+
     public function historyEntityType(): string
     {
         return 'document';

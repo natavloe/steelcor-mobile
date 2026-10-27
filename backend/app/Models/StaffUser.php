@@ -23,6 +23,9 @@ class StaffUser extends Authenticatable implements FilamentUser, HasAppAuthentic
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['is_active' => true, 'all_regions' => false];
+
     protected function casts(): array
     {
         return [
@@ -41,7 +44,7 @@ class StaffUser extends Authenticatable implements FilamentUser, HasAppAuthentic
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->is_active;
+        return (bool) $this->is_active;
     }
 
     /** ID регионов, доступных сотруднику; null — все регионы. */

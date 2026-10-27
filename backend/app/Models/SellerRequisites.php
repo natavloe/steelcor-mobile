@@ -15,6 +15,9 @@ class SellerRequisites extends Model
     protected $table = 'seller_requisites';
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['status' => 'draft'];
+
     protected function casts(): array
     {
         return [

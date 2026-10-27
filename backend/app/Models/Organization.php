@@ -17,6 +17,9 @@ class Organization extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['source' => 'manual', 'verification_status' => 'unverified', 'payment_terms' => 'prepay'];
+
     protected function casts(): array
     {
         return [

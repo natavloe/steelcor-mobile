@@ -11,6 +11,9 @@ class Email extends Model
 {
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['status' => 'queued', 'purpose' => 'info'];
+
     protected function casts(): array
     {
         return [

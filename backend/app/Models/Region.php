@@ -11,6 +11,9 @@ class Region extends Model
 {
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['is_active' => false, 'sort' => 0, 'timezone' => 'Europe/Moscow'];
+
     protected function casts(): array
     {
         return [

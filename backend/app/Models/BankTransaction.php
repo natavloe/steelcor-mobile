@@ -15,6 +15,9 @@ class BankTransaction extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['match_status' => 'unmatched'];
+
     protected function casts(): array
     {
         return [

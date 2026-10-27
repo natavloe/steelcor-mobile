@@ -13,6 +13,9 @@ class OfferLine extends Model
 {
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['line_type' => 'goods', 'vat_rate' => 0, 'sort' => 0];
+
     protected function casts(): array
     {
         return [

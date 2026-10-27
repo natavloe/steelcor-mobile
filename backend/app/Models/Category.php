@@ -12,6 +12,9 @@ class Category extends Model
 {
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['sort' => 0, 'is_published' => true];
+
     protected function casts(): array
     {
         return [
@@ -32,6 +35,11 @@ class Category extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function categoryAttributes(): HasMany
+    {
+        return $this->hasMany(CategoryAttribute::class)->orderBy('sort');
     }
 
     public function characteristics(): BelongsToMany

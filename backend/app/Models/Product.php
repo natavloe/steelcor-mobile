@@ -12,6 +12,9 @@ class Product extends Model
 {
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['attrs' => '{}', 'is_oversize' => false, 'is_published' => true];
+
     protected function casts(): array
     {
         return [

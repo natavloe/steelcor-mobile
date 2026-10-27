@@ -10,6 +10,9 @@ class DeliveryAddress extends Model
 {
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['is_archived' => false];
+
     protected function casts(): array
     {
         return [

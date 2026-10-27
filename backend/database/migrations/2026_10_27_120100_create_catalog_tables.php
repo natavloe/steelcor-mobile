@@ -35,12 +35,13 @@ return new class extends Migration
         });
 
         Schema::create('category_attributes', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->foreignId('attribute_id')->constrained()->cascadeOnDelete();
             $table->boolean('is_filterable')->default(true);
             $table->boolean('is_required')->default(false);
             $table->integer('sort')->default(0);
-            $table->primary(['category_id', 'attribute_id']);
+            $table->unique(['category_id', 'attribute_id']);
         });
 
         Schema::create('products', function (Blueprint $table) {

@@ -17,6 +17,9 @@ class Shipment extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['status' => 'not_arranged', 'cost_confirmed' => false];
+
     public function historyEntityType(): string
     {
         return 'shipment';

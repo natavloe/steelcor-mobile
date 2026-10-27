@@ -15,6 +15,9 @@ class Invoice extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['status' => 'issued', 'kind' => 'prepayment', 'vat' => 0];
+
     protected function casts(): array
     {
         return [

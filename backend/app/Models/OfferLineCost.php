@@ -13,6 +13,9 @@ class OfferLineCost extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['logistics_cost' => 0, 'handling_cost' => 0, 'other_costs' => 0];
+
     protected function casts(): array
     {
         return [

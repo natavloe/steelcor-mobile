@@ -15,6 +15,9 @@ class Refund extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['status' => 'requested'];
+
     public function historyEntityType(): string
     {
         return 'refund';

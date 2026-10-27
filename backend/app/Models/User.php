@@ -21,6 +21,9 @@ class User extends Authenticatable
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['status' => 'active'];
+
     protected function casts(): array
     {
         return [

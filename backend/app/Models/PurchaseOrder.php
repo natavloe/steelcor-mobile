@@ -16,6 +16,9 @@ class PurchaseOrder extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['status' => 'draft', 'total' => 0, 'supplier_payment_status' => 'not_paid'];
+
     public function historyEntityType(): string
     {
         return 'purchase_order';

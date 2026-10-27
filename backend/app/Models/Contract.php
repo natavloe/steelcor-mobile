@@ -16,6 +16,9 @@ class Contract extends Model
 
     protected $guarded = ['id'];
 
+    /** Значения по умолчанию (как в базе), чтобы новые записи сразу их видели. */
+    protected $attributes = ['status' => 'generating'];
+
     public function historyEntityType(): string
     {
         return 'contract';
