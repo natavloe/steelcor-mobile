@@ -24,11 +24,17 @@ class AdminPanelSmokeTest extends TestCase
         $this->actingAs($this->client, 'web')->get('/admin')->assertRedirect('/admin/login');
     }
 
-    public function test_every_resource_page_renders_for_head_and_admin(): void
+    public function test_every_resource_page_renders_for_every_role(): void
     {
-        $this->acceptedOrder();
+        [$order, $offer] = $this->acceptedOrder();
+        $invoice = $order->invoices()->sole();
+        app(\App\Services\Bank\BankStatementImporter::class)->importFile($this->seller, $this->statement('190000.00', "Оплата {$invoice->number}"));
+        $procurement = app(\App\Services\ProcurementService::class);
+        $po = $procurement->create($this->supplier, $this->region, $this->actor('procurement'));
+        $procurement->addLine($po, ['description' => 'Круг', 'qty' => '2', 'unit' => 't', 'purchase_price' => '80000'], [$offer->lines()->first()->id => '2'], $this->actor('procurement'));
+        app(\App\Services\RefundService::class)->request($order, null, '1000', 'тест', $this->actor('accountant'));
 
-        foreach (['head', 'admin'] as $role) {
+        foreach (['head', 'admin', 'manager', 'procurement', 'accountant', 'logistics', 'lawyer'] as $role) {
             // Новая сессия для каждого сотрудника (иначе AuthenticateSession разлогинит по хешу пароля прошлого).
             $this->flushSession();
             $this->app['auth']->forgetGuards();
