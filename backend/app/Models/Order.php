@@ -94,6 +94,11 @@ class Order extends Model
         return $this->belongsTo(Offer::class, 'agreed_offer_id');
     }
 
+    public function statusHistories(): HasMany
+    {
+        return $this->hasMany(StatusHistory::class, 'entity_id')->where('entity_type', 'order')->orderByDesc('id');
+    }
+
     public function dates(): HasMany
     {
         return $this->hasMany(OrderDate::class)->orderBy('id');

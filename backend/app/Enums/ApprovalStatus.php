@@ -2,10 +2,11 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
 /** Статус утверждения. */
-enum ApprovalStatus: string implements HasLabel
+enum ApprovalStatus: string implements HasColor, HasLabel
 {
     use LabelledEnum;
 
@@ -19,6 +20,15 @@ enum ApprovalStatus: string implements HasLabel
             self::Draft => 'Черновик',
             self::Approved => 'Утверждено',
             self::Archived => 'В архиве',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::Draft => 'warning',
+            self::Approved => 'success',
+            self::Archived => 'gray',
         };
     }
 }

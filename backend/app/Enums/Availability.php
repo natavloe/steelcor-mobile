@@ -2,10 +2,11 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
 /** Доступность для клиента. */
-enum Availability: string implements HasLabel
+enum Availability: string implements HasColor, HasLabel
 {
     use LabelledEnum;
 
@@ -23,6 +24,16 @@ enum Availability: string implements HasLabel
             self::MadeToOrder => 'Поставка под заказ',
             self::Unavailable => 'Временно недоступен',
             self::PriceOnRequest => 'Цена по запросу',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::Orderable => 'success',
+            self::NeedsSupplierCheck, self::PriceOnRequest => 'warning',
+            self::MadeToOrder => 'primary',
+            self::Unavailable => 'gray',
         };
     }
 }

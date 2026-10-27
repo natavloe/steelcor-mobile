@@ -39,7 +39,9 @@ class AdminPanelSmokeTest extends TestCase
                 if (! $resource::canViewAny()) {
                     continue;
                 }
-                $this->assertPageOk($resource::getUrl('index'));
+                if ($resource::hasPage('index')) {
+                    $this->assertPageOk($resource::getUrl('index'));
+                }
                 if ($resource::hasPage('create') && $resource::canCreate()) {
                     $this->assertPageOk($resource::getUrl('create'));
                 }

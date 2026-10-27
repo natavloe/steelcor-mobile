@@ -2,10 +2,11 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
 /** Статус оплаты. */
-enum PaymentStatus: string implements HasLabel
+enum PaymentStatus: string implements HasColor, HasLabel
 {
     use LabelledEnum;
 
@@ -29,6 +30,16 @@ enum PaymentStatus: string implements HasLabel
             self::Refund => 'Возврат средств',
             self::Refunded => 'Возврат выполнен',
             self::PaymentError => 'Ошибка оплаты',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::Paid => 'success',
+            self::PaymentError => 'danger',
+            self::AwaitingPayment, self::AwaitingConfirmation, self::PartiallyPaid, self::Refund => 'warning',
+            self::NotInvoiced, self::Refunded => 'gray',
         };
     }
 }

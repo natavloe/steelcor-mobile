@@ -2,10 +2,11 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
 /** Статус инцидента. */
-enum IssueStatus: string implements HasLabel
+enum IssueStatus: string implements HasColor, HasLabel
 {
     use LabelledEnum;
 
@@ -23,6 +24,15 @@ enum IssueStatus: string implements HasLabel
             self::WaitingSupplier => 'Ждём поставщика',
             self::Resolved => 'Решён',
             self::Closed => 'Закрыт',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::Open => 'danger',
+            self::WaitingClient, self::WaitingSupplier => 'warning',
+            self::Resolved, self::Closed => 'success',
         };
     }
 }

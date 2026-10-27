@@ -2,10 +2,11 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
 /** Статус документа. */
-enum DocumentStatus: string implements HasLabel
+enum DocumentStatus: string implements HasColor, HasLabel
 {
     use LabelledEnum;
 
@@ -31,6 +32,17 @@ enum DocumentStatus: string implements HasLabel
             self::Rejected => 'Отклонён',
             self::NeedsCorrection => 'Требует исправления',
             self::Annulled => 'Аннулирован',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::Signed => 'success',
+            self::Rejected, self::NeedsCorrection => 'danger',
+            self::Generating, self::Annulled => 'gray',
+            self::AwaitingReview, self::AwaitingBuyerSignature, self::AwaitingSellerSignature => 'warning',
+            self::SentToClient => 'primary',
         };
     }
 }

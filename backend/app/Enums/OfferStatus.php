@@ -2,10 +2,11 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
 /** Статус предложения. */
-enum OfferStatus: string implements HasLabel
+enum OfferStatus: string implements HasColor, HasLabel
 {
     use LabelledEnum;
 
@@ -27,6 +28,17 @@ enum OfferStatus: string implements HasLabel
             self::Rejected => 'Клиент просит изменить',
             self::Expired => 'Истёк срок',
             self::Superseded => 'Заменено новой версией',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::Accepted => 'success',
+            self::Rejected, self::Expired => 'danger',
+            self::Draft, self::Superseded => 'gray',
+            self::PendingApproval => 'warning',
+            self::Sent => 'primary',
         };
     }
 }

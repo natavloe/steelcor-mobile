@@ -2,10 +2,11 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
 /** Статус возврата. */
-enum RefundStatus: string implements HasLabel
+enum RefundStatus: string implements HasColor, HasLabel
 {
     use LabelledEnum;
 
@@ -23,6 +24,15 @@ enum RefundStatus: string implements HasLabel
             self::Sent => 'Отправлен',
             self::Completed => 'Выполнен',
             self::Rejected => 'Отклонён',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::Requested, self::Approved, self::Sent => 'warning',
+            self::Completed => 'success',
+            self::Rejected => 'gray',
         };
     }
 }

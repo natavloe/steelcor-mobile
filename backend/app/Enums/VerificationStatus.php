@@ -2,10 +2,11 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
 /** Проверка реквизитов. */
-enum VerificationStatus: string implements HasLabel
+enum VerificationStatus: string implements HasColor, HasLabel
 {
     use LabelledEnum;
 
@@ -19,6 +20,15 @@ enum VerificationStatus: string implements HasLabel
             self::Unverified => 'Не проверены',
             self::Verified => 'Проверены',
             self::Rejected => 'Отклонены',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::Unverified => 'warning',
+            self::Verified => 'success',
+            self::Rejected => 'danger',
         };
     }
 }

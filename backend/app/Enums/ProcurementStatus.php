@@ -2,10 +2,11 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
 /** Сводный статус закупки по заказу. */
-enum ProcurementStatus: string implements HasLabel
+enum ProcurementStatus: string implements HasColor, HasLabel
 {
     use LabelledEnum;
 
@@ -25,6 +26,16 @@ enum ProcurementStatus: string implements HasLabel
             self::Ready => 'Готово',
             self::Problem => 'Проблема',
             self::Done => 'Выполнена',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::Ready, self::Done => 'success',
+            self::Problem => 'danger',
+            self::InProgress, self::Confirmed => 'primary',
+            self::NotStarted => 'gray',
         };
     }
 }

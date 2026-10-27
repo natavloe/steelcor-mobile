@@ -2,10 +2,11 @@
 
 namespace App\Enums;
 
+use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
 /** Разбор платежа. */
-enum MatchStatus: string implements HasLabel
+enum MatchStatus: string implements HasColor, HasLabel
 {
     use LabelledEnum;
 
@@ -21,6 +22,16 @@ enum MatchStatus: string implements HasLabel
             self::Matched => 'Привязан',
             self::PartiallyMatched => 'Привязан частично',
             self::Ignored => 'Не относится к заказам',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::Unmatched => 'danger',
+            self::PartiallyMatched => 'warning',
+            self::Matched => 'success',
+            self::Ignored => 'gray',
         };
     }
 }
