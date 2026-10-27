@@ -7,13 +7,13 @@ use App\Models\Region;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Номера документов: {префикс}-{РЕГИОН}-{год}-{000123}.
+ * Номера документов: {префикс}-{РЕГИОН}-{год}-{000123}, например ЗАК-SMR-2026-000123.
  * Счётчик свой у юрлица, вида документа и года (О-4 — формат может измениться).
  */
 class DocumentNumberGenerator
 {
     public const PREFIXES = [
-        'order' => 'З',
+        'order' => 'ЗАК',
         'invoice' => 'СЧ',
         'offer' => 'КП',
         'contract' => 'Д',

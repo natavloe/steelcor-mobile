@@ -66,7 +66,7 @@ class OrderResource extends Resource
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            Section::make('Статусы')->columns(5)->schema([
+            Section::make('Статусы')->columns(['default' => 2, 'md' => 3, '2xl' => 5])->schema([
                 TextEntry::make('status')->label('Заказ')->badge(),
                 TextEntry::make('payment_status')->label('Оплата')->badge(),
                 TextEntry::make('procurement_status')->label('Закупка')->badge(),
@@ -77,8 +77,8 @@ class OrderResource extends Resource
                     ->color(fn (bool $state) => $state ? 'danger' : 'gray')
                     ->visible(fn (Order $record) => $record->is_reagreement),
             ]),
-            Grid::make(2)->schema([
-                Section::make('Клиент')->schema([
+            Grid::make(['default' => 1, 'lg' => 2])->columnSpanFull()->schema([
+                Section::make('Клиент')->columnSpan(['default' => 'full', 'lg' => 1])->schema([
                     TextEntry::make('organization.name_short')->label('Организация')
                         ->url(fn (Order $record) => \App\Filament\Resources\Organizations\OrganizationResource::getUrl('edit', ['record' => $record->organization_id])),
                     TextEntry::make('organization.inn')->label('ИНН'),
@@ -87,7 +87,7 @@ class OrderResource extends Resource
                     TextEntry::make('contact_phone')->label('Телефон'),
                     TextEntry::make('client_comment')->label('Комментарий клиента')->placeholder('—'),
                 ]),
-                Section::make('Получение и сроки')->schema([
+                Section::make('Получение и сроки')->columnSpan(['default' => 'full', 'lg' => 1])->schema([
                     TextEntry::make('region.name')->label('Регион'),
                     TextEntry::make('receive_method')->label('Способ'),
                     TextEntry::make('deliveryAddress.address')->label('Адрес доставки')->placeholder('—'),
@@ -117,10 +117,10 @@ class OrderResource extends Resource
                         RepeatableEntry\TableColumn::make('Цена'),
                         RepeatableEntry\TableColumn::make('Сумма'),
                     ])->schema([
-                        TextEntry::make('name'),
-                        TextEntry::make('qty')->formatStateUsing(fn ($state, $record) => rtrim(rtrim((string) $state, '0'), '.').' '.$record->unit->label()),
-                        TextEntry::make('unit_price')->money('RUB'),
-                        TextEntry::make('amount_total')->money('RUB'),
+                        TextEntry::make('name')->label('Наименование'),
+                        TextEntry::make('qty')->label('Кол-во')->formatStateUsing(fn ($state, $record) => rtrim(rtrim((string) $state, '0'), '.').' '.$record->unit->label()),
+                        TextEntry::make('unit_price')->label('Цена')->money('RUB'),
+                        TextEntry::make('amount_total')->label('Сумма')->money('RUB'),
                     ]),
                 ]),
             Section::make('Запрос клиента')
@@ -131,9 +131,9 @@ class OrderResource extends Resource
                         RepeatableEntry\TableColumn::make('Кол-во'),
                         RepeatableEntry\TableColumn::make('Комментарий'),
                     ])->schema([
-                        TextEntry::make('description'),
-                        TextEntry::make('qty')->formatStateUsing(fn ($state, $record) => rtrim(rtrim((string) $state, '0'), '.').' '.$record->unit->label()),
-                        TextEntry::make('comment')->placeholder('—'),
+                        TextEntry::make('description')->label('Позиция'),
+                        TextEntry::make('qty')->label('Кол-во')->formatStateUsing(fn ($state, $record) => rtrim(rtrim((string) $state, '0'), '.').' '.$record->unit->label()),
+                        TextEntry::make('comment')->label('Комментарий')->placeholder('—'),
                     ]),
                 ]),
         ]);

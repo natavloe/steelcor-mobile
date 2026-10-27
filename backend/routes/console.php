@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use App\Services\OrderWorkflow;
+use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+// Истёкшие предложения → «истёк срок», заказ возвращается менеджеру.
+Schedule::call(fn () => app(OrderWorkflow::class)->expireOffers())
+    ->name('expire-offers')
+    ->everyFifteenMinutes()
+    ->withoutOverlapping();

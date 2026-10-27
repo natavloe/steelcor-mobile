@@ -34,7 +34,7 @@ class OrderLifecycleTest extends TestCase
         $order = $this->placeOrder('2');
         $this->assertSame(OrderStatus::Created, $order->status);
         $this->assertSame(PaymentStatus::NotInvoiced, $order->payment_status);
-        $this->assertSame('З-TST-'.now()->year.'-000001', $order->number);
+        $this->assertSame('ЗАК-TST-'.now()->year.'-000001', $order->number);
         $this->assertNotNull($order->currentDate(\App\Enums\DateKind::Preliminary));
 
         // Менеджер: предложение по цене каталога 95 000 ₽/т × 2 т
